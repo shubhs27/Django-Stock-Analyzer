@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market Analyzer</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Stock Market Analyzer</h1>
+        <p>Using candlestick charts &copy;Transvolt</p>
+      </header>
+      <div class="controls">
+        <div class="control-group">
+          <label for="company-select">Select Company:</label>
+          <select id="company-select" class="form-control">
+            <option value="">Choose a company...</option>
+            {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="start-date">Start Date:</label>
+          <input
+            type="date"
+            id="start-date"
+            class="form-control"
+            min="{{ earliest_date|date:'Y-m-d' }}"
+            max="{{ latest_date|date:'Y-m-d' }}"
+            value="{{ earliest_date|date:'Y-m-d' }}"
+          />
+        </div>
+        <div class="control-group">
+          <label for="end-date">End Date:</label>
+          <input
+            type="date"
+            id="end-date"
+            class="form-control"
+            min="{{ earliest_date|date:'Y-m-d' }}"
+            max="{{ latest_date|date:'Y-m-d' }}"
+            value="{{ latest_date|date:'Y-m-d' }}"
+          />
+        </div>
+        <button id="generate-chart" class="btn-primary">Generate Chart</button>
+      </div>
+      <div class="chart-container">
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p>Loading chart data...</p>
+        </div>
+        <div id="chart-placeholder" class="chart-placeholder">
+          <div class="placeholder-content">
+            <h3>✅ Ready to Analyze</h3>
+            <p>Select a company and date range</p>
+          </div>
+        </div>
+        <div id="chart-container" class="responsive-chart"></div>
+        <div id="error-message" class="error-message hidden"></div>
+      </div>
+      <div id="chart-info" class="chart-info hidden">
+        <p>
+          Showing <span id="data-points">0</span> data points for
+          <span id="company-name"></span>
+          (<span id="aggregation-level"></span> intervals)
+        </p>
+      </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>
