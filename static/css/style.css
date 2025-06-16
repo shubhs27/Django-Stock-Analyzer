@@ -7,6 +7,8 @@
   --success: hsl(142, 76%, 36%);
   --error: hsl(0, 84%, 60%);
   --border: hsl(217, 32%, 17%);
+  --download: hsl(156, 73%, 39%);
+  --download-hover: hsl(156, 73%, 50%);
 }
 
 * {
@@ -25,9 +27,10 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: none !important;
+  width: 98% !important;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 1%;
 }
 
 .header {
@@ -108,11 +111,16 @@ body {
   opacity: 1;
 }
 
-.btn-primary {
+.button-group {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
   padding: 14px 24px;
-  background-color: var(--primary);
-  color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -123,14 +131,35 @@ body {
   letter-spacing: 0.5px;
 }
 
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
 .btn-primary:hover {
   background-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.btn-primary:active {
+.btn-secondary {
+  background-color: var(--download);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--download-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
   transform: translateY(0);
+}
+
+.btn-half {
+  width: 100%;
 }
 
 .chart-container {
@@ -139,14 +168,17 @@ body {
   padding: 20px;
   border: 1px solid var(--border);
   position: relative;
-  min-height: 500px;
+  min-height: 600px; /* Increased for volume chart */
+  width: 100%;
+  margin: 20px 0;
+  box-sizing: border-box;
 }
 
 .chart-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 400px;
+  height: 500px;
   text-align: center;
 }
 
@@ -217,10 +249,19 @@ body {
   display: none !important;
 }
 
-/* Responsive design */
+/* Responsive chart container */
+.responsive-chart {
+  width: 100% !important;
+  min-height: 600px; /* Increased for volume */
+  max-width: none !important;
+  overflow: hidden;
+}
+
+/* Media queries for different screen sizes */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
+    width: 95% !important;
+    padding: 0 2.5%;
   }
 
   .header h1 {
@@ -232,73 +273,63 @@ body {
     padding: 20px;
   }
 
+  .button-group {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
   .chart-container {
     padding: 15px;
+    min-height: 500px;
   }
-}
 
-/* Responsive chart container */
-.responsive-chart {
-  width: 100% !important;
-  min-height: 500px;
-  max-width: none !important;
-  overflow: hidden;
-}
-
-/* Ensure chart container adapts to screen size */
-.chart-container {
-  width: 100%;
-  margin: 20px 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Remove container width limitations */
-.container {
-  max-width: none !important;
-  width: 98% !important;
-  margin: 0 auto;
-  padding: 0 1%;
-}
-
-/* Media queries for different screen sizes */
-@media (max-width: 768px) {
   .responsive-chart {
-    min-height: 400px;
-  }
-
-  .container {
-    width: 95% !important;
-    padding: 0 2.5%;
+    min-height: 500px;
   }
 }
 
 @media (max-width: 480px) {
-  .responsive-chart {
-    min-height: 350px;
-  }
-
   .container {
     width: 90% !important;
     padding: 0 5%;
+  }
+
+  .responsive-chart {
+    min-height: 450px;
+  }
+
+  .chart-container {
+    min-height: 450px;
   }
 }
 
 @media (min-width: 1200px) {
   .responsive-chart {
-    min-height: 600px;
+    min-height: 700px;
+  }
+
+  .chart-container {
+    min-height: 700px;
   }
 }
 
 @media (min-width: 1600px) {
   .responsive-chart {
-    min-height: 700px;
+    min-height: 800px;
+  }
+
+  .chart-container {
+    min-height: 800px;
   }
 }
 
 @media (min-width: 2000px) {
   .responsive-chart {
-    min-height: 800px;
+    min-height: 900px;
+  }
+
+  .chart-container {
+    min-height: 900px;
   }
 }
 
@@ -324,4 +355,44 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
+}
+
+/* Volume chart specific styling */
+.volume-info {
+  background-color: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+.volume-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.volume-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.volume-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.volume-up {
+  background-color: #22c55e;
+}
+
+.volume-down {
+  background-color: #ef4444;
 }

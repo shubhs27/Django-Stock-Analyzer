@@ -11,7 +11,7 @@
     <div class="container">
       <header class="header">
         <h1>Stock Market Analyzer</h1>
-        <p>Using candlestick charts</p>
+        <p>Using candlestick charts with volume analysis</p>
       </header>
       <div class="controls">
         <div class="control-group">
@@ -45,21 +45,46 @@
             value="{{ latest_date|date:'Y-m-d' }}"
           />
         </div>
-        <button id="generate-chart" class="btn-primary">Generate Chart</button>
+        <div class="button-group">
+          <button id="generate-chart" class="btn-primary btn-half">
+            Generate Chart
+          </button>
+          <button id="download-csv" class="btn-secondary btn-half">
+            Download CSV
+          </button>
+        </div>
       </div>
       <div class="chart-container">
         <div id="loading" class="loading hidden">
           <div class="spinner"></div>
           <p>Loading chart data...</p>
         </div>
+        <div id="csv-loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p>Preparing CSV download...</p>
+        </div>
         <div id="chart-placeholder" class="chart-placeholder">
           <div class="placeholder-content">
             <h3>✅ Ready to Analyze</h3>
-            <p>Select a company and date range</p>
+            <p>
+              Select a company and date range to view candlestick chart with
+              volume or download CSV data
+            </p>
           </div>
         </div>
         <div id="chart-container" class="responsive-chart"></div>
         <div id="error-message" class="error-message hidden"></div>
+        <!-- Volume Legend -->
+        <div id="volume-legend" class="volume-legend hidden">
+          <div class="volume-legend-item">
+            <div class="volume-legend-color volume-up"></div>
+            <span>Volume (Price Up)</span>
+          </div>
+          <div class="volume-legend-item">
+            <div class="volume-legend-color volume-down"></div>
+            <span>Volume (Price Down)</span>
+          </div>
+        </div>
       </div>
       <div id="chart-info" class="chart-info hidden">
         <p>
